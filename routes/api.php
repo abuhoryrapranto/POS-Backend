@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminPublicController;
+use App\Http\Controllers\AdminAuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +21,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/save-admin', [AdminPublicController::class, 'signupAuth']);
+
+Route::get('/check-shop-open', [AdminAuthController::class, 'checkShopOpen'])->middleware('auth:sanctum');
+Route::get('/all-countries', [AdminAuthController::class, 'getAllCountry'])->middleware('auth:sanctum');
+Route::get('/all-currencies', [AdminAuthController::class, 'getAllCurrency'])->middleware('auth:sanctum');
 
 Route::group([
     'prefix'=>'auth'
