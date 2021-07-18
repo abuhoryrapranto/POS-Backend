@@ -20,3 +20,16 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/save-admin', [AdminPublicController::class, 'signupAuth']);
+
+Route::group([
+    'prefix'=>'auth'
+], function(){
+    Route::post('/login', [AdminPublicController::class, 'login']);
+    Route::post('/logout', [AdminPublicController::class, 'logout']);
+});
+
+Route::group([
+    'middleware' => 'auth:sanctum',
+], function(){
+    Route::post('/logout', [AdminPublicController::class, 'logout']);
+});

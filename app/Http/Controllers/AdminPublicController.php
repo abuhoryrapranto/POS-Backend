@@ -48,4 +48,36 @@ class AdminPublicController extends Controller
             return $this->getResponse(200, 'success', 'User created', $e->getMessage());
         }
     }
+
+    public function login(Request  $request) {
+        $this->validate($request, [
+            'email'    => 'required|email|exists:admins',
+            'password' => 'required|min:6'
+        ]);
+
+        $user = Admin::where('email', $request->email)->first();
+
+        if($user) {
+            $check_password = Hash::check($request->password, $user->password);
+            
+            if($check_password && $user->status == 1) {
+                $token  = $user->createToken('user-token')->plainTextToken;
+                $response = [
+                    'user' => $user,
+                    'token' => $token
+                ];
+                return $this->getResponse(200, 'success', 'User loggedin', $response);
+            } else {
+                return $this->getResponse(400, 'failed', 'Password not match', null);
+            }
+        }
+        return $this->getResponse(400, 'failed', 'Email not found', null);
+    }
+
+    public function logout(Request $request) {
+        $request->user()->currentAccessToken()->delete();
+        return $this->getResponse(200, 'success', "Successfully logout.", null);
+
+    }
+
 }
