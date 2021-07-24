@@ -28,8 +28,8 @@ class AdminAuthController extends Controller
     }
 
     public function getAllCountry() {
-        $currencies = Country::where('status', 1)->get();
-        if($currencies->isEmpty())
+        $countries = Country::where('status', 1)->get();
+        if($countries->isEmpty())
             return $this->getResponse(404, 'failed', 'Countries not found!', null);
         return $this->getResponse(200, 'success', 'Country list', $countries);
     }
