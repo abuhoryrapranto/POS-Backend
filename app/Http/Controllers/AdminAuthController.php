@@ -134,4 +134,33 @@ class AdminAuthController extends Controller
             return $this->getResponse(500, 'failed', 'Something went wrong!');
         }
     }
+
+    public function getAdminprofile($uuid) {
+        $admin = Admin::where('uuid', $uuid)->first();
+        if(!$admin)
+            return $this->getResponse(404, 'failed', 'Admins not found!');
+        return $this->getResponse(200, 'success', 'Admin found.', $admin);
+    }
+
+    public function updateAdminProfile(Request $request, $uuid) {
+
+        $data = Admin::where('uuid', $uuid)->first();
+
+         $this->validate($request, [
+            'first_name' => 'required',
+            'last_name'  => 'required',
+            'email'      => 'required|email|unique:admins,email,'.$data->id
+        ]);
+
+        $data->first_name  = $request->first_name;
+        $data->last_name   = $request->last_name;
+        $data->phone       = $request->phone;
+        $data->email       = $request->email;
+
+        $data->save();
+
+        if(!$data)
+            return $this->getResponse(500, 'failed', 'Something went wrong!');
+        return $this->getResponse(200, 'success', 'Admin profile updated successfully.');
+    }
 }

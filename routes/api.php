@@ -55,4 +55,6 @@ Route::group([
     Route::get('/admin-active-toggle/{uuid}', [AdminAuthController::class, 'adminActiveToggle']);
     Route::get('/my-country', [AdminAuthController::class, 'getMyCountry']);
     Route::get('/all-admins', [AdminAuthController::class, 'adminList']);
+    Route::get('/profile/{uuid}', [AdminAuthController::class, 'getAdminprofile']);
+    Route::put('/update-profile/{uuid}', [AdminAuthController::class, 'updateAdminProfile']);
 });
