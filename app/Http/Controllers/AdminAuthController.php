@@ -149,6 +149,7 @@ class AdminAuthController extends Controller
          $this->validate($request, [
             'first_name' => 'required',
             'last_name'  => 'required',
+            'phone'      => 'nullable|unique:admins,phone,'.$data->id,
             'email'      => 'required|email|unique:admins,email,'.$data->id
         ]);
 

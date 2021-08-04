@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminPublicController;
 use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\ShopController;
+use App\Http\Controllers\StaffsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,4 +58,12 @@ Route::group([
     Route::get('/all-admins', [AdminAuthController::class, 'adminList']);
     Route::get('/profile/{uuid}', [AdminAuthController::class, 'getAdminprofile']);
     Route::put('/update-profile/{uuid}', [AdminAuthController::class, 'updateAdminProfile']);
+});
+
+Route::group([
+    'middleware' => 'auth:sanctum',
+    'prefix' => 'staffs'
+], function(){
+    Route::post('/save-new-staff', [StaffsController::class, 'saveStaff']);
+    Route::get('/all-staffs', [StaffsController::class, 'getAllStaffs']);
 });
