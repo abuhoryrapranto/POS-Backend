@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminPublicController;
 use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\StaffsController;
+use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -66,4 +67,15 @@ Route::group([
 ], function(){
     Route::post('/save-new-staff', [StaffsController::class, 'saveStaff']);
     Route::get('/all-staffs', [StaffsController::class, 'getAllStaffs']);
+});
+
+Route::group([
+    'middleware' => 'auth:sanctum',
+    'prefix' => 'brands'
+], function(){
+    Route::post('/save-new', [ProductController::class, 'saveBrand']);
+    Route::get('/all-brands', [ProductController::class, 'getAllBrands']);
+    Route::get('/toggle-brand/{uuid}', [ProductController::class, 'brandActiveChange']);
+    Route::put('/update-brand/{uuid}', [ProductController::class, 'updateBrand']);
+    Route::delete('/delete-brand/{uuid}', [ProductController::class, 'deleteBrand']);
 });
