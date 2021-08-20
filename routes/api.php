@@ -78,4 +78,17 @@ Route::group([
     Route::get('/toggle-brand/{uuid}', [ProductController::class, 'brandActiveChange']);
     Route::put('/update-brand/{uuid}', [ProductController::class, 'updateBrand']);
     Route::delete('/delete-brand/{uuid}', [ProductController::class, 'deleteBrand']);
+    Route::delete('/force-delete-brand/{uuid}', [ProductController::class, 'forceDeleteBrand']);
+});
+
+Route::group([
+    'middleware' => 'auth:sanctum',
+    'prefix' => 'types'
+], function(){
+    Route::post('/save-new', [ProductController::class, 'saveType']);
+    Route::get('/all-types', [ProductController::class, 'getAllTypes']);
+    Route::get('/toggle-type/{uuid}', [ProductController::class, 'typeActiveChange']);
+    Route::put('/update-type/{uuid}', [ProductController::class, 'updateType']);
+    Route::delete('/delete-type/{uuid}', [ProductController::class, 'deleteType']);
+    Route::delete('/force-delete-type/{uuid}', [ProductController::class, 'forceDeleteType']);
 });
