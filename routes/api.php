@@ -92,3 +92,15 @@ Route::group([
     Route::delete('/delete-type/{uuid}', [ProductController::class, 'deleteType']);
     Route::delete('/force-delete-type/{uuid}', [ProductController::class, 'forceDeleteType']);
 });
+
+Route::group([
+    'middleware' => 'auth:sanctum',
+    'prefix' => 'units'
+], function(){
+    Route::post('/save-new', [ProductController::class, 'saveUnit']);
+    Route::get('/all-units', [ProductController::class, 'getAllUnits']);
+    Route::get('/toggle-unit/{uuid}', [ProductController::class, 'unitActiveChange']);
+    Route::put('/update-unit/{uuid}', [ProductController::class, 'updateUnit']);
+    Route::delete('/delete-unit/{uuid}', [ProductController::class, 'deleteUnit']);
+    Route::delete('/force-delete-unit/{uuid}', [ProductController::class, 'forceDeleteUnit']);
+});
